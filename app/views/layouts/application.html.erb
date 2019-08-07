@@ -10,6 +10,23 @@
   </head>
 
   <body>
+    <% if logged_in? %>
+      <form action="<%= session_url %>" method="POST">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="submit" value="Log Out">
+      </form>
+    <% else %>
+      <a href="<%= new_user_url %>" class="button">Sign Up</a>
+      <a href="<%= new_session_url %>" class="button">Sign In</a>
+    <% end %>
+
+    <% if flash[:errors] %>
+      <% flash[:errors].each do |error| %>
+        <p style="color: maroon"><%= error %></p>
+      <% end %>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
